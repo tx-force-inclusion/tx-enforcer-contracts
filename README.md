@@ -1,66 +1,120 @@
-## Foundry
+# TxEnforcerV1
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Smart contract designed to interact with **Superchain Layer 2s** that utilize the **OptimismPortal**. This contract enables users to force-include transactions on supported Layer 2 chains by interacting with their respective messaging contract on Layer 1.
 
-Foundry consists of:
+This project uses the [Foundry framework](https://github.com/foundry-rs/foundry) for testing and deployment.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Disclaimer
 
-## Documentation
+⚠️ Proof of Concept (PoC): Use with Caution
 
-https://book.getfoundry.sh/
+This contract is a PoC and has not been audited for security. It is intended for experimental and educational purposes only. Users should exercise caution when deploying or interacting with this contract in production environments.
+
+## Table of Contents
+
+- [About](#about)
+- [Getting Started](#getting-started)
+  - [Requirements](#requirements)
+  - [Quickstart](#quickstart)
+- [Usage](#usage)
+  - [Start a Local Node](#start-a-local-node)
+  - [Deploy](#deploy)
+  - [Deploy to Other Networks](#deploy-to-other-networks)
+- [Interactions](#interactions)
+- [Formatting](#formatting)
+- [Static Analysis](#static-analysis)
+- [Disclaimer](#disclaimer)
+- [License](#license)
+- [Author](#author)
+
+## About
+
+TxEnforcerV1 is a proof-of-concept (PoC) contract that forwards user requests into the **OptimismPortal's** `depositTransaction` function. It supports forwarding transactions to specific Layer 2 addresses, transferring ETH, and emitting events for transparency.
+
+This contract is the first version, supporting Superchain Layer 2s using the OptimismPortal. Future versions will include support for additional Layer 2 clusters.
+
+## Getting Started
+
+### Requirements
+
+- Git: [Download](https://git-scm.com/downloads)
+  - Verify installation: `git --version`
+- Foundry: [Installation Guide](https://book.getfoundry.sh/getting-started/installation)
+  - Verify installation: `forge --version`
+
+### Quickstart
+
+Clone the repository and build the project:
+
+```bash
+git clone https://github.com/tx-force-inclusion/tx-enforcer-contracts.git
+cd tx-enforcer-v1
+forge install
+forge build
+```
 
 ## Usage
 
-### Build
+### Start a Local Node
 
-```shell
-$ forge build
-```
+Start a local Ethereum node for testing using Anvil (included with Foundry):
 
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
+```bash
+anvil
 ```
 
 ### Deploy
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+In a separate terminal, deploy the contract to your local node:
+
+```bash
+forge script script/DeployTxEnforcerV1.s.sol:DeployTxEnforcerV1 --fork-url http://localhost:8545 --broadcast
 ```
 
-### Cast
+### Deploy to Other Networks
 
-```shell
-$ cast <subcommand>
+To deploy to networks like Sepolia or Mainnet, specify the network in the deploy script and provide the necessary RPC URLs and private keys.
+
+```bash
+forge script script/Deploy.s.sol:DeployTxEnforcerV1 --rpc-url $(SEPOLIA_RPC_URL) --account $(SEPOLIA_ACCOUNT) --broadcast --verify --etherscan-api-key $(ETHERSCAN_API_KEY)
 ```
 
-### Help
+### Setup Environment Variables
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+Create a .env file and set the following variables:
+
+- `PRIVATE_KEY`: Your private key (ensure it is for a test account).
+- `SEPOLIA_RPC_URL` or `MAINNET_RPC_URL`: RPC URL for the network.
+- `ETHERSCAN_API_KEY` (optional): For contract verification.
+
+## Interactions
+
+Interact with the deployed contract using `cast` commands.
+
+Examples:
+
+- Forward a transaction to Layer 2:
+
+```bash
+cast send <contract_address> "forwardDepositTx(address,address,uint256,uint64,bool,bytes)" <portal_address> <to_address> <value> <gas_limit> <is_creation> <calldata> --private-key $(PRIVATE_KEY) --rpc-url $(RPC_URL)
 ```
+
+## Formatting
+
+Ensure code is formatted correctly:
+
+```bash
+forge fmt
+```
+
+## Static Analysis
+
+Run [Slither](https://github.com/crytic/slither) for static analysis:
+
+```bash
+slither .
+```
+
+## License
+
+This project is licensed under the MIT License.
