@@ -41,5 +41,5 @@ jobs:
 
       - name: Run Forge tests
         run: |
-          forge test -vvv
+          forge test --fork-url https://sepolia.drpc.org --sender 0xF6442075bD987478f5E8D33dAC102c60eeAD8292 -vvv
         id: test

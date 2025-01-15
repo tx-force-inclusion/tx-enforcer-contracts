@@ -34,26 +34,9 @@ contract TxEnforcerV1 {
         uint64 _gasLimit,
         bool _isCreation,
         bytes calldata _data
-    )
-        external
-        payable
-    {
-        IOptimismPortal(_portal).depositTransaction{value: msg.value}(
-            _to,
-            _value,
-            _gasLimit,
-            _isCreation,
-            _data
-        );
+    ) external payable {
+        IOptimismPortal(_portal).depositTransaction{value: msg.value}(_to, _value, _gasLimit, _isCreation, _data);
 
-        emit TxForwarded(
-            msg.sender,
-            _portal,
-            _to,
-            _value,
-            _gasLimit,
-            _isCreation,
-            _data
-        );
+        emit TxForwarded(msg.sender, _portal, _to, _value, _gasLimit, _isCreation, _data);
     }
 }

@@ -15,17 +15,17 @@ contract TestTxEnforcerV1 is Test {
 
     address constant L2ContractAddress = 0xCe4258B32697315466E78b6a01038D5cd6e4e34c;
 
-    address constant RECEIVER_ADDRESS = 0x23d3957BE879aBa6ca925Ee4F072d1A8C4E8c890;
+    address constant RECEIVER_ADDRESS = 0xF6442075bD987478f5E8D33dAC102c60eeAD8292;
 
     uint256 constant VALUE = 0.00001 ether;
 
     uint256 constant AMOUNT_TO_MINT = 10000000000000000000;
 
-    uint64 constant  GAS_LIMIT = 1000000;
+    uint64 constant GAS_LIMIT = 1000000;
 
     bool constant IS_CREATION = false;
 
-    address constant SENDER = 0x23d3957BE879aBa6ca925Ee4F072d1A8C4E8c890;
+    address constant SENDER = 0xF6442075bD987478f5E8D33dAC102c60eeAD8292;
 
     event TxForwarded(
         address indexed sender,
