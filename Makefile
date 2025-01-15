@@ -28,7 +28,7 @@ anvil :; anvil -m 'test test test test test test test test test test test junk' 
 deploy:
 	@forge script script/DeployTxEnforcerV1.s.sol:DeployTxEnforcerV1 $(NETWORK_ARGS)
 
-NETWORK_ARGS := --rpc-url http://localhost:8545 --account $(LOCAL_ACCOUNT) --broadcast
+NETWORK_ARGS := --rpc-url http://localhost:8545 --broadcast
 
 ifeq ($(findstring --network sepolia,$(ARGS)),--network sepolia)
     NETWORK_ARGS := \
@@ -40,6 +40,19 @@ ifeq ($(findstring --network sepolia,$(ARGS)),--network sepolia)
       -vvvv
 endif
 
+ifeq ($(findstring --network mainnet,$(ARGS)),--network mainnet)
+    NETWORK_ARGS := \
+      --rpc-url $(MAINNET_RPC_URL) \
+      --account $(MAINNET_ACCOUNT) \
+      --broadcast \
+      --verify \
+      --etherscan-api-key $(ETHERSCAN_API_KEY) \
+      -vvvv
+endif
+
 deploy-sepolia:
+	@forge script script/DeployTxEnforcerV1.s.sol:DeployTxEnforcerV1 $(NETWORK_ARGS)
+
+deploy-mainnet:
 	@forge script script/DeployTxEnforcerV1.s.sol:DeployTxEnforcerV1 $(NETWORK_ARGS)
 

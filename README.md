@@ -10,6 +10,11 @@ This project uses the [Foundry framework](https://github.com/foundry-rs/foundry)
 
 This contract is a PoC and has not been audited for security. It is intended for experimental and educational purposes only. Users should exercise caution when deploying or interacting with this contract in production environments.
 
+## Deployment Addresses
+
+- `Mainnet`: [0x6A20DAA469A26aF06BDC012147996030BB08106F](https://etherscan.io/address/0x6A20DAA469A26aF06BDC012147996030BB08106F#code)
+- `Sepolia`: [0xb2382eA48E00F6cB56663d8EEE9c7c68Cd21AB9B](https://sepolia.etherscan.io/address/0xb2382eA48E00F6cB56663d8EEE9c7c68Cd21AB9B#code)
+
 ## Table of Contents
 
 - [About](#about)
